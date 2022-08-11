@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "downlevelIteration": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "module": "CommonJS",
+    "strict": true,
+    "pretty": true,
+    "target": "ESNext",
+    "noImplicitThis": false,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
+  }
+}
