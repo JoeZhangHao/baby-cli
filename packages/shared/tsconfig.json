@@ -1,8 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "declarationDir": "./typings",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src/**/*"],
-  "exclude": ["bin/*", "lib/**/*"]
+  "include": ["./src/**/*"]
 }

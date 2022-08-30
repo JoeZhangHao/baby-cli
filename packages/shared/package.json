@@ -1,6 +1,6 @@
 {
   "name": "@baby-cli/shared",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "license": "ISC",
   "description": "脚手架工具方法",

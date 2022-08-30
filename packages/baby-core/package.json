@@ -1,6 +1,33 @@
 {
-  "name": "baby-core",
+  "name": "@baby-cli/core",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "description": "make cli core",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "typings": "dist",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup-node",
+    "start": "pnpm build --watch --sourcemap"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@baby-cli/shared": "workspace:^1.0.1",
+    "commander": "^9.4.0",
+    "inquirer": "^9.1.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.1"
+  }
 }
