@@ -28,7 +28,8 @@
     "access": "public"
   },
   "scripts": {
-    "test": "test"
+    "build": "tsup-node",
+    "start": "pnpm build --watch --sourcemap"
   },
   "devDependencies": {
     "@types/configstore": "^6.0.0",
