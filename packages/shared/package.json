@@ -1,0 +1,70 @@
+{
+  "name": "@baby-cli/shared",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "ISC",
+  "description": "脚手架工具方法",
+  "keywords": [
+    "工具方法"
+  ],
+  "author": "joehaozhang <zhanghao1993105@qq.com>",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "typings": "dist",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "@types/configstore": "^6.0.0",
+    "@types/eslint": "^8.4.6",
+    "@types/inquirer": "^9.0.1",
+    "@types/inquirer-autocomplete-prompt": "^1.3.5",
+    "@types/jsonfile": "^6.1.0",
+    "@types/node": "^18.7.14",
+    "@types/randomstring": "^1.1.8",
+    "@types/shelljs": "^0.8.11",
+    "@types/signale": "^1.4.4",
+    "@types/terminal-kit": "^2.5.0"
+  },
+  "dependencies": {
+    "@antfu/install-pkg": "^0.1.0",
+    "@types/npmlog": "^4.1.4",
+    "chalk": "^5.0.1",
+    "configstore": "^6.0.0",
+    "download-git-repo": "^3.0.2",
+    "eslint": "^8.21.0",
+    "execa": "^6.1.0",
+    "fast-glob": "^3.2.11",
+    "fuzzy": "^0.1.3",
+    "image-downloader": "^4.3.0",
+    "inquirer": "^9.1.0",
+    "inquirer-autocomplete-prompt": "^2.0.0",
+    "inquirer-checkbox-plus-prompt": "^1.0.1",
+    "jsonfile": "^6.1.0",
+    "npmlog": "^6.0.2",
+    "ora": "^6.1.2",
+    "randomstring": "^1.2.2",
+    "read-pkg": "^7.1.0",
+    "resolve-cwd": "^3.0.0",
+    "shelljs": "^0.8.5",
+    "signale": "^1.4.0",
+    "simple-git": "^3.13.0",
+    "terminal-kit": "^2.8.7"
+  }
+}
