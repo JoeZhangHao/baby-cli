@@ -5,6 +5,12 @@ import BaseClass from './base';
 import { CommandConfig, Options } from './command';
 import pkg from '../../package.json' assert { type: 'json' };
 
+/**
+ * baby cli 核心
+ *
+ * @class BabyCli
+ * @extends {BaseClass}
+ */
 class BabyCli extends BaseClass {
   private program: commander.Command;
   private CommandCtors: CommandConfig[] = [];
