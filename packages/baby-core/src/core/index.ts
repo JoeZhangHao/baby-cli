@@ -3,7 +3,6 @@ import { logger } from '@baby-cli/shared';
 
 import BaseClass from './base';
 import { CommandConfig, Options } from './command';
-import pkg from '../../package.json' assert { type: 'json' };
 
 /**
  * baby cli 核心
@@ -25,7 +24,7 @@ class BabyCli extends BaseClass {
     const program = createCommand();
 
     program
-      .version(`@baby-cli/baby ${pkg.version} `)
+      .version(`@baby-cli/baby ${require('../../package').version}`)
       .usage('<command> [subCommand] [options]')
       .passThroughOptions();
 
