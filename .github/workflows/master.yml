@@ -42,7 +42,7 @@ jobs:
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
       # step-no.4: 安装 pnpm
       - name: setup pnpm
-        uses: pnpm/action-setup@v2.0.1
+        uses: pnpm/action-setup@v2.2.2
         with:
           version: latest
       # step-no.5: 获取 pnpm 存储目录赋给 pnpm_cache_dir
