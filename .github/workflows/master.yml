@@ -1,0 +1,78 @@
+# 指定工作流程的名称
+name: release
+# 指定此工作流的触发时间 Event。这里使用推送事件，即执行 push 之后，触发该流水线的执行
+on:
+  push:
+    # 指定 push 的分支为 master 时才触发
+    branches:
+      - master
+# https://docs.npmjs.com/using-private-packages-in-a-ci-cd-workflow
+# 新增环境变量
+env:
+  CI: true
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+jobs:
+  # 指定一个 job 的名称为 release
+  release:
+    timeout-minutes: 15
+    # 指定该 job 在最新版的 Ubuntu Linux 的 Runner（运行器）上运行
+    runs-on: ubuntu-latest
+    # 存放 jobs 作业中的所有 step
+    steps:
+      # 参考 pnpm/action-step 的配置 https://github.com/pnpm/action-setup#use-cache-to-reduce-installation-time
+      # step-no.1: 运行 actions/checkout@v2 操作，操作一般用 uses 调用
+      # 一般用于处理一些复杂又频繁的操作例如拉取分支，安装插件
+      # 此处 actions/checkout 操作是从仓库拉取代码到 Runner 里的操作
+      - name: checkout code repository
+        # uses 关键字指定此步骤将运行 actions/checkout 操作的 v3。 这是一个将存储库签出到运行器上的操作，允许您对代码（如生成和测试工具）运行脚本或其他操作。 每当工作流程将针对存储库的代码运行时，都应使用签出操作。
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      # step-no.2: actions/setup-node@v3 操作来安装指定版本的 Node.js，此处指定安装的版本为 v14
+      - name: setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      # step-no.3: 为 npmrc 配置 _authToken 发包免登录，此变量参考上述 env 注释来配置，token 通过 npm token create 而来
+      - name: setup npmrc
+        run: |
+          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' >> .npmrc
+      # step-no.4: 安装 pnpm
+      - name: setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: latest
+      # step-no.5: 获取 pnpm 存储目录赋给 pnpm_cache_dir
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      # step-no.6: 缓存 pnpm 缓存文件夹，加快打包速度
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      # step-no.7: pnpm install
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+      # step-no.8: 预发布 lint 与 test
+      - name: prepare for publish
+        run: |
+          pnpm whoami
+          pnpm lint
+          pnpm t
+      # step-no.9: 创建新的版本发布
+      - name: create and publish versions
+        uses: changesets/action@master
+        with:
+          commit: 'chore: update versions'
+          publish: pnpm release
+          version: pnpm ci:version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
